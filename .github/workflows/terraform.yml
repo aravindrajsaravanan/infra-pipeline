@@ -4,9 +4,9 @@ name: terraform
 # CD: plan / apply / destroy only via manual "Run workflow".
 on:
   push:
-    branches: [dev, main]
+    branches: [dev]
   pull_request:
-    branches: [dev, main]
+    branches: [dev]
   workflow_dispatch:
     inputs:
       environment:

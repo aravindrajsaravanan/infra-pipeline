@@ -28,6 +28,12 @@ variable "github_repo" {
   default     = "aravindrajsaravanan/infra-pipeline"
 }
 
+variable "github_immutable_repo" {
+  description = "Immutable OIDC subject form owner@ownerId/repo@repoId (gh api repos/OWNER/REPO/actions/oidc/customization/sub)"
+  type        = string
+  default     = "aravindrajsaravanan@163525466/infra-pipeline@1463966512"
+}
+
 variable "state_bucket" {
   description = "S3 bucket holding Terraform state"
   type        = string
@@ -67,11 +73,12 @@ data "aws_iam_policy_document" "trust" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values = [
-        "repo:${var.github_repo}:ref:refs/heads/dev",
-        "repo:${var.github_repo}:ref:refs/heads/main",
-        "repo:${var.github_repo}:environment:development",
-      ]
+      values = flatten([
+        for p in [var.github_repo, var.github_immutable_repo] : [
+          "repo:${p}:ref:refs/heads/dev",
+          "repo:${p}:environment:development",
+        ]
+      ])
     }
   }
 }
