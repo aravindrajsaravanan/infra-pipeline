@@ -16,6 +16,30 @@ resource "aws_subnet" "mysubnet" {
   }
 }
 
+resource "aws_security_group" "mysg" {
+  name        = "${var.env}-ec2-sg"
+  description = "EC2 security group for ${var.env}"
+  vpc_id      = aws_vpc.myvpc.id
+
+  egress {
+    description = "All outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.env}-ec2-sg"
+    env  = var.env
+  }
+}
+
+output "security_group_id" {
+  description = "EC2 security group id"
+  value       = aws_security_group.mysg.id
+}
+
 output "vpc_id" {
   description = "VPC id"
   value       = aws_vpc.myvpc.id

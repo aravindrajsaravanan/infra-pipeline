@@ -17,15 +17,15 @@ module "vpc" {
 module "ec2" {
   source = "../..//modules/ec2" # path details
   ec2_config = {
-    ami_id             = "ami-0037855f86d0a04b4"  # amazon linux 2
-    instance_type      = "t2.large"               # instance type
-    volume             = 30                       # volume size (GiB)
-    vpc_id             = module.vpc.vpc_id        # vpc id
-    subnet_id          = module.vpc.subnet_id     # subnet id
-    ec2_count          = 2                        # number of instances
-    env                = var.env.name             # development environment
-    security_group_ids = ["sg-0d678ad25e20d8617"] # security group ids (must belong to module.vpc's VPC)
-    key_name           = "mumbai_key"             # EC2 key pair name (not the .ppk file name)
+    ami_id             = "ami-0037855f86d0a04b4"        # amazon linux 2023
+    instance_type      = "t2.large"                     # instance type
+    volume             = 30                             # volume size (GiB)
+    vpc_id             = module.vpc.vpc_id              # vpc id
+    subnet_id          = module.vpc.subnet_id           # subnet id
+    ec2_count          = 2                              # number of instances
+    env                = var.env.name                   # development environment
+    security_group_ids = [module.vpc.security_group_id] # security group in the new vpc
+    key_name           = "mumbai_key"                   # EC2 key pair name (not the .ppk file name)
   }
 
   tags = {
