@@ -18,6 +18,12 @@ variable "env" {
   type        = string
 }
 
+variable "ingress_cidrs" {
+  description = "CIDRs allowed inbound on all TCP ports"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
 variable "tags" {
   description = "Extra tags for the VPC"
   type        = map(string)

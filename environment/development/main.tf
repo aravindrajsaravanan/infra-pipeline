@@ -43,6 +43,11 @@ output "instance_ids" {
   value       = module.ec2.instance_ids
 }
 
+output "public_ips" {
+  description = "EC2 public IPs (PuTTY: ec2-user@<ip> with mumbai_key.ppk)"
+  value       = module.ec2.public_ips
+}
+
 output "private_ips" {
   description = "EC2 private IPs"
   value       = module.ec2.private_ips
