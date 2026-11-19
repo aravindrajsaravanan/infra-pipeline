@@ -1,20 +1,25 @@
 variable "aws_vpc" {
   description = "vpc resource"
   type = object({
-    cidr_block       = string
-    env              = map(string)
+    cidr_block = string
   })
 }
 
 variable "aws_subnet" {
   description = "subnet resource"
   type = object({
-    vpc_id     = string
-    cidr_block = string
+    cidr_block         = string
+    availability_zones = list(string)
   })
 }
 
-variable "availability_zones" {
-  description = "List of availability zones"
-  type = list(string)
+variable "env" {
+  description = "Environment name"
+  type        = string
+}
+
+variable "tags" {
+  description = "Extra tags for the VPC"
+  type        = map(string)
+  default     = {}
 }
